@@ -1,9 +1,6 @@
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 import scraping
-from bs4 import BeautifulSoup as soup
-import requests
-import re
 
 app = Flask(__name__)
 
@@ -25,3 +22,9 @@ def scrape():
 
 if __name__ == "__main__":
    app.run()
+        
+
+    
+
+    
+
