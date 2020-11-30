@@ -101,6 +101,44 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
+def mars_hemisphere(browser):
+
+    # 1. Use browser to visit the URL 
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars//'
+    browser.visit(url)
+
+    #Parse the HTML
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+    link=img_soup.find_all("div",class_='item')
+
+    # 2. Create a list to hold the images and titles.
+    hemisphere_image_urls = []
+
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+
+    for titles in link:
+        #Find each title (from inspecting, the title are in h3 header level)
+        title=titles.h3.text
+        
+        #Click on the title
+        browser.click_link_by_partial_text(title)
+
+        #Parse the new page
+        html = browser.html
+        new_soup = soup(html, 'html.parser')
+        
+        #Getting the image URL by obtaining the ['href'] link (from inspecting href link is located under div class)
+        url=new_soup.find("div",class_="downloads").find("a")['href']
+        
+        #append to dictionary
+        dicts={"title":title,"img_url":url}  
+        
+        hemisphere_image_urls.append(dicts)
+    #return hemisphere list
+        return hemisphere_image_urls
+
+# Tell flask that script is ready for action.
 if __name__ == "__main__":
 
     # If running as script, print scraped data
