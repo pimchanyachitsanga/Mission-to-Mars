@@ -4,9 +4,6 @@ from bs4 import BeautifulSoup as soup
 import pandas as pd
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Path to chromedriver
-get_ipython().system('which chromedriver')
-
 # Set the executable path and initialize the chrome browser in splinter
 executable_path = {'executable_path': ChromeDriverManager().install()}
 browser = Browser('chrome', **executable_path)
